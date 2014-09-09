@@ -67,7 +67,7 @@ class UserCest
     public function successEdit(ApiTester $I)
     {
         $I->wantToTest('Смену телефона у пользователя');
-        $I->sendPUT('/users/' . $this->user['id'] . '/update', [
+        $I->sendPUT('/users/' . $this->user['id'] . '/edit', [
             'token' => $this->token,
             'phone' => rand(7915000001,79159999999),
         ]);

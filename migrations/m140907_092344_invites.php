@@ -9,11 +9,12 @@ class m140907_092344_invites extends Migration
     {
         $this->createTable('invites', [
             'id' => Schema::TYPE_PK,
-            'inviter_id' => Schema::TYPE_INTEGER,
+            'inviter_id' => Schema::TYPE_INTEGER . ' NOT NULL',
             'user_id' => Schema::TYPE_INTEGER,
             'email' => Schema::TYPE_STRING,
-            'status' => Schema::TYPE_SMALLINT,
-            'create_date' => Schema::TYPE_DATETIME,
+            'status' => Schema::TYPE_SMALLINT . ' NOT NULL DEFAULT ' . \app\models\Invite::STATUS_NEW,
+            'key' => Schema::TYPE_STRING . ' NOT NULL',
+            'create_date' => Schema::TYPE_DATETIME . ' NOT NULL',
             'use_date' => Schema::TYPE_DATETIME,
         ]);
 

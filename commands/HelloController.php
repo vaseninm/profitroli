@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use app\models\User;
 use yii\console\Controller;
 
 /**
@@ -19,12 +20,12 @@ use yii\console\Controller;
  */
 class HelloController extends Controller
 {
-    /**
-     * This command echoes what you have entered as the message.
-     * @param string $message the message to be echoed.
-     */
-    public function actionIndex($message = 'hello world')
+
+    public function actionIndex()
     {
-        echo $message . "\n";
+        $user = User::find()
+            ->where(['email' => 'vaseninm@gmail.com'])
+            ->one();
+        var_dump($user->isCorrectPassword('123qwe'));
     }
 }
