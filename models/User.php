@@ -26,6 +26,15 @@ class User extends \yii\db\ActiveRecord
         return 'users';
     }
 
+    public static function findIdentityByAccessToken($token, $type = null){
+        return User::find()
+            ->joinWith(Token::tableName())
+            ->where([
+                Token::tableName() . '.key' => $token
+            ])
+            ->one();
+    }
+
     /**
      * @inheritdoc
      */
@@ -60,6 +69,14 @@ class User extends \yii\db\ActiveRecord
     public function getInvites()
     {
         return $this->hasMany(Invite::className(), ['inviter_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTokens()
+    {
+        return $this->hasMany(Token::className(), ['user_id' => 'id']);
     }
 
     public function isCorrectPassword($password) {

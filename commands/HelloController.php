@@ -23,9 +23,7 @@ class HelloController extends Controller
 
     public function actionIndex()
     {
-        $user = User::find()
-            ->where(['email' => 'vaseninm@gmail.com'])
-            ->one();
-        var_dump($user->isCorrectPassword('123qwe'));
+        $user = User::findIdentityByAccessToken('cb597b2c46dc69f2e5a53d4e9544450a');
+        var_dump($user);
     }
 }

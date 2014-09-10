@@ -38,6 +38,10 @@ class UserCest
         $this->token = $I->grabResponse();
     }
 
+    /**
+     * @depends successLogin
+     * @param ApiTester $I
+     */
     public function successSendInvite(ApiTester $I)
     {
         $I->wantToTest('Успешную отправку нового инвайта для пользователя');
@@ -49,6 +53,10 @@ class UserCest
         $this->invite = $I->grabDataFromJsonResponse('');
     }
 
+    /**
+     * @depends test
+     * @param ApiTester $I
+     */
     public function successReg(ApiTester $I)
     {
         $username = substr(uniqid(rand(),1), 3, 14);
@@ -64,6 +72,10 @@ class UserCest
         $this->user = $I->grabDataFromJsonResponse('');
     }
 
+    /**
+     * @depends test
+     * @param ApiTester $I
+     */
     public function successEdit(ApiTester $I)
     {
         $I->wantToTest('Смену телефона у пользователя');
@@ -75,6 +87,10 @@ class UserCest
         $user = $I->grabDataFromJsonResponse('');
     }
 
+    /**
+     * @depends test
+     * @param ApiTester $I
+     */
     public function successGetInfo(ApiTester $I)
     {
         $I->wantToTest('Получение информации о пользователе');
@@ -85,6 +101,10 @@ class UserCest
         $user = $I->grabDataFromJsonResponse('');
     }
 
+    /**
+     * @depends test
+     * @param ApiTester $I
+     */
     public function successGetUserList(ApiTester $I)
     {
         $I->wantToTest('Смену телефона у пользователя');
