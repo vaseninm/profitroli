@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\ModelEvent;
+use yii\db\BaseActiveRecord;
 use yii\web\IdentityInterface;
 
 /**
@@ -83,7 +85,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['name', 'email', 'create_date'], 'required'],
+            [['name', 'email'], 'required'],
             [['create_date'], 'safe'],
             [['name', 'email', 'phone', 'password'], 'string', 'max' => 255],
             [['email'], 'unique']
@@ -124,4 +126,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function isCorrectPassword($password) {
         return crypt($password, $this->password) === $this->password;
     }
+
+    public function beforeSave($insert)
+    {
+        $this->password = crypt($this->password);
+
+        return parent::beforeSave($insert);
+    }
+
+
 }

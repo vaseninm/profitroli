@@ -35,7 +35,7 @@ class UserCest
             'password' => UserCest::PASSWORD,
         ]);
         $I->seeResponseCodeIs(201);
-        $this->token = $I->grabResponse();
+        $this->token = trim($I->grabResponse(), '"');
     }
 
     /**
@@ -45,8 +45,7 @@ class UserCest
     public function successSendInvite(ApiTester $I)
     {
         $I->wantToTest('Успешную отправку нового инвайта для пользователя');
-        $I->sendPost('/invites/create', [
-            'token' => $this->token,
+        $I->sendPost('/invites/create?token=' . $this->token, [
             'email' => UserCest::EMAIL,
         ]);
         $I->seeResponseCodeIs(201);
@@ -54,7 +53,7 @@ class UserCest
     }
 
     /**
-     * @depends test
+     * @depends successSendInvite
      * @param ApiTester $I
      */
     public function successReg(ApiTester $I)
@@ -62,7 +61,7 @@ class UserCest
         $username = substr(uniqid(rand(),1), 3, 14);
         $I->wantToTest('Успешную регистрацию нового пользователя');
         $I->sendPOST('/users/registration', [
-            'invite' => $this->invite['key'],
+            'invite' => $this->invite,
             'email' => $username . '@profitroli',
             'name' => $username,
             'phone' => rand(7915000001,79159999999),

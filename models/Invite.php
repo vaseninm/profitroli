@@ -33,12 +33,19 @@ class Invite extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return string
+     */
+    public static function generateKey() {
+        return substr(md5(rand()),3,8);
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['inviter_id', 'key', 'create_date'], 'required'],
+            [['inviter_id', 'key'], 'required'],
             [['inviter_id', 'user_id', 'status'], 'integer'],
             [['create_date', 'use_date'], 'safe'],
             [['email', 'key'], 'string', 'max' => 255]
@@ -88,11 +95,12 @@ class Invite extends \yii\db\ActiveRecord
         }
     }
 
-    /**
-     * @return string
-     */
-    public static function generateKey() {
-        return substr(md5(rand()),3,8);
+    public function setUsedBy(User $user) {
+        $this->use_date = new \yii\db\Expression('NOW()');
+        $this->status = Invite::STATUS_USED;
+        $this->link('user', $user);
+
+        return $this;
     }
 
 

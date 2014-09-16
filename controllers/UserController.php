@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Invite;
 use app\models\Token;
 use app\models\User;
 use yii\filters\auth\QueryParamAuth;
@@ -44,7 +45,21 @@ class UserController extends \yii\rest\Controller
 
     public function actionRegistration()
     {
-        return $this->render('registration');
+        $user = new User();
+        $invite = Invite::findOne(['key' => \Yii::$app->request->post('invite')]);
+
+        if (! $invite) throw new BadRequestHttpException('Invite not found', 401);
+        if ($invite->status === Invite::STATUS_USED) throw new BadRequestHttpException('Invite is used', 401);
+
+        $user->load(\Yii::$app->request->post(), '');
+
+        if (! $user->save()) throw new BadRequestHttpException('Error ' . json_encode($user->errors), 401);
+
+        $invite->setUsedBy($user)->save();
+
+        \Yii::$app->response->setStatusCode(201);
+
+        return $user;
     }
 
     public function actionEdit()

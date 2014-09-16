@@ -26,6 +26,8 @@ class InviteController extends \yii\rest\Controller
 
         $invite->save();
 
+        \Yii::$app->response->setStatusCode(201);
+
         return $invite->key;
     }
 

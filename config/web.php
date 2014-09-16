@@ -44,6 +44,7 @@ $config = [
             'rules' => [
                 'POST /users/login' => 'user/login',
                 'POST /invites/create' => 'invite/create',
+                'POST /users/registration' => 'user/registration',
             ]
         ],
     ],
