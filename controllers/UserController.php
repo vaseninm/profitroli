@@ -12,10 +12,11 @@ class UserController extends \yii\rest\Controller
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-//        $behaviors['authenticator'] = [
-//            'class' => QueryParamAuth::className(),
-//            'tokenParam' => 'token',
-//        ];
+        $behaviors['authenticator'] = [
+            'class' => QueryParamAuth::className(),
+            'tokenParam' => 'token',
+            'except' => ['login', 'registration'],
+        ];
         return $behaviors;
     }
 
@@ -26,14 +27,14 @@ class UserController extends \yii\rest\Controller
             ->one();
 
         if (! $user || ! $user->isCorrectPassword(\Yii::$app->request->post('password'))) {
-            throw new BadRequestHttpException(401);
+            throw new BadRequestHttpException('Password not correct', 401);
         }
 
         $token = new Token();
         $token->user_id = $user->id;
 
         if (! $token->save()) {
-            throw new BadRequestHttpException(401);
+            throw new BadRequestHttpException('Error ' . json_encode($token->errors), 401);
         }
 
         \Yii::$app->response->setStatusCode(201);

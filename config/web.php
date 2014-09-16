@@ -1,5 +1,4 @@
 <?php
-
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -15,7 +14,7 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => \app\models\User::className(),
+            'identityClass' => 'app\models\User',
             'enableSession' => false,
         ],
         'errorHandler' => [
@@ -44,6 +43,7 @@ $config = [
             'enableStrictParsing' => true,
             'rules' => [
                 'POST /users/login' => 'user/login',
+                'POST /invites/create' => 'invite/create',
             ]
         ],
     ],

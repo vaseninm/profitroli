@@ -3,7 +3,7 @@
 namespace app\controllers;
 
 use app\models\Invite;
-use yii\filters\auth\HttpBearerAuth;
+use yii\filters\auth\QueryParamAuth;
 
 class InviteController extends \yii\rest\Controller
 {
@@ -11,7 +11,8 @@ class InviteController extends \yii\rest\Controller
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => HttpBearerAuth::className(),
+            'class' => QueryParamAuth::className(),
+            'tokenParam' => 'token',
         ];
         return $behaviors;
     }
