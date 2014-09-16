@@ -127,12 +127,13 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return crypt($password, $this->password) === $this->password;
     }
 
-    public function beforeSave($insert)
+    public function init()
     {
-        $this->password = crypt($this->password);
+        parent::init();
 
-        return parent::beforeSave($insert);
+        if ($this->isNewRecord) {
+            $this->create_date = new \yii\db\Expression('NOW()');
+        }
     }
-
 
 }

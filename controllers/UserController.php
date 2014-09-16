@@ -52,6 +52,7 @@ class UserController extends \yii\rest\Controller
         if ($invite->status === Invite::STATUS_USED) throw new BadRequestHttpException('Invite is used', 401);
 
         $user->load(\Yii::$app->request->post(), '');
+        $user->password = crypt(\Yii::$app->request->post('password'));
 
         if (! $user->save()) throw new BadRequestHttpException('Error ' . json_encode($user->errors), 401);
 
@@ -62,19 +63,35 @@ class UserController extends \yii\rest\Controller
         return $user;
     }
 
-    public function actionEdit()
+    public function actionEdit($id)
     {
-        return $this->render('edit');
+        $id = (int) $id;
+
+        if ($id !== \Yii::$app->user->id) throw new BadRequestHttpException('Not own profile', 401);
+
+        $user = User::findOne($id);
+        $user->load(\Yii::$app->request->post());
+
+        if (! $user->save()) throw new BadRequestHttpException('Error ' . json_encode($user->errors), 401);
+
+        \Yii::$app->response->setStatusCode(200);
+
+        return $user;
     }
 
-    public function actionView()
+    public function actionView($id)
     {
-        return $this->render('view');
+        return User::findOne((int) $id);
     }
 
     public function actionList()
     {
-        return $this->render('list');
+        $limit = \Yii::$app->request->get('limit', 10);
+        $offset = \Yii::$app->request->get('offset', 0);
+        return User::find()
+            ->limit($limit)
+            ->offset($offset)
+            ->all();
     }
 
 

@@ -22,7 +22,8 @@ class m140909_120529_tokens extends Migration
 
     public function down()
     {
-        $this->dropIndex('uq_tokens_key', 'invites');
-        $this->dropForeignKey('fk_user_token', 'invites');
+        $this->dropIndex('uq_tokens_key', 'tokens');
+        $this->dropForeignKey('fk_user_token', 'tokens');
+        $this->dropTable('tokens');
     }
 }

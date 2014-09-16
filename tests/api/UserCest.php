@@ -3,6 +3,7 @@ use \ApiTester;
 
 class UserCest
 {
+    const ID = 1;
     const EMAIL = 'vaseninm@gmail.com';
     const PASSWORD = '123qwe';
 
@@ -64,7 +65,7 @@ class UserCest
             'invite' => $this->invite,
             'email' => $username . '@profitroli',
             'name' => $username,
-            'phone' => rand(7915000001,79159999999),
+            'phone' => rand(7915000001, 79159999999),
             'password' => base64_encode($username),
         ]);
         $I->seeResponseCodeIs(201);
@@ -72,45 +73,39 @@ class UserCest
     }
 
     /**
-     * @depends test
+     * @depends successReg
      * @param ApiTester $I
      */
     public function successEdit(ApiTester $I)
     {
         $I->wantToTest('Смену телефона у пользователя');
-        $I->sendPUT('/users/' . $this->user['id'] . '/edit', [
-            'token' => $this->token,
-            'phone' => rand(7915000001,79159999999),
+        $I->sendPUT('/users/' . UserCest::ID . '/edit?token=' . $this->token, [
+            'phone' => rand(7915000001, 79159999999),
         ]);
         $I->seeResponseCodeIs(200);
         $user = $I->grabDataFromJsonResponse('');
     }
 
     /**
-     * @depends test
+     * @depends successReg
      * @param ApiTester $I
      */
     public function successGetInfo(ApiTester $I)
     {
         $I->wantToTest('Получение информации о пользователе');
-        $I->sendGet('/users/' . $this->user['id'], [
-            'token' => $this->token,
-        ]);
+        $I->sendGet('/users/' . $this->user['id'] . '?token=' . $this->token, []);
         $I->seeResponseCodeIs(200);
         $user = $I->grabDataFromJsonResponse('');
     }
 
     /**
-     * @depends test
+     * @depends successReg
      * @param ApiTester $I
      */
-    public function successGetUserList(ApiTester $I)
+    public function successGetList(ApiTester $I)
     {
         $I->wantToTest('Смену телефона у пользователя');
-        $I->sendGet('/users', [
-            'token' => $this->token,
-            'phone' => rand(7915000001,79159999999),
-        ]);
+        $I->sendGet('/users?token=' . $this->token, []);
         $I->seeResponseCodeIs(200);
         $user = $I->grabDataFromJsonResponse('');
     }

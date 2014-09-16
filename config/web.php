@@ -45,6 +45,9 @@ $config = [
                 'POST /users/login' => 'user/login',
                 'POST /invites/create' => 'invite/create',
                 'POST /users/registration' => 'user/registration',
+                'PUT /users/<id:\d+>/edit' => 'user/edit',
+                'GET /users/<id:\d+>' => 'user/view',
+                'GET /users' => 'user/list',
             ]
         ],
     ],
