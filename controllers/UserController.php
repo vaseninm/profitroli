@@ -70,7 +70,7 @@ class UserController extends \yii\rest\Controller
         if ($id !== \Yii::$app->user->id) throw new BadRequestHttpException('Not own profile', 401);
 
         $user = User::findOne($id);
-        $user->load(\Yii::$app->request->post());
+        $user->load(\Yii::$app->request->post(), false);
 
         if (! $user->save()) throw new BadRequestHttpException('Error ' . json_encode($user->errors), 401);
 

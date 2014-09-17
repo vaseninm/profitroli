@@ -104,7 +104,7 @@ class UserCest
      */
     public function successGetList(ApiTester $I)
     {
-        $I->wantToTest('Смену телефона у пользователя');
+        $I->wantToTest('Получение списка пользователей');
         $I->sendGet('/users?token=' . $this->token, []);
         $I->seeResponseCodeIs(200);
         $user = $I->grabDataFromJsonResponse('');
