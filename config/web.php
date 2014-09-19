@@ -54,6 +54,9 @@ $config = [
                 'PUT /posts/<id:\d+>' => 'post/edit',
                 'GET /posts/<id:\d+>' => 'post/view',
                 'GET /posts' => 'post/list',
+
+                'POST /posts/<post:\d+>/comments' => 'comments/create',
+                'GET /posts/<post:\d+>/comments' => 'comments/list',
             ]
         ],
     ],

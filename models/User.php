@@ -17,8 +17,12 @@ use yii\web\IdentityInterface;
  * @property string $password
  * @property string $create_date
  *
+ * @property Comment[] $comments
  * @property Invite[] $invites
+ * @property Post[] $posts
+ * @property Token[] $tokens
  */
+
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     /**
@@ -121,6 +125,22 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getTokens()
     {
         return $this->hasMany(Token::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPosts()
+    {
+        return $this->hasMany(Post::className(), ['author_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['author_id' => 'id']);
     }
 
     public function isCorrectPassword($password) {

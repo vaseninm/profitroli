@@ -5,26 +5,25 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "posts".
+ * This is the model class for table "comments".
  *
  * @property integer $id
- * @property string $title
- * @property string $text
  * @property integer $author_id
+ * @property integer $post_id
+ * @property string $text
  * @property string $create_date
  *
+ * @property Post $post
  * @property User $author
- * @property Comment[] $comments
  */
-class Post extends \yii\db\ActiveRecord
+class Comment extends \yii\db\ActiveRecord
 {
-
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'posts';
+        return 'comments';
     }
 
     /**
@@ -33,10 +32,9 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['author_id', 'post_id'], 'integer'],
             [['text'], 'string'],
-            [['author_id'], 'integer'],
-            [['create_date'], 'safe'],
-            [['title'], 'string', 'max' => 255]
+            [['create_date'], 'safe']
         ];
     }
 
@@ -47,9 +45,9 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'text' => 'Text',
             'author_id' => 'Author ID',
+            'post_id' => 'Post ID',
+            'text' => 'Text',
             'create_date' => 'Create Date',
         ];
     }
@@ -66,16 +64,16 @@ class Post extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAuthor()
+    public function getPost()
     {
-        return $this->hasOne(User::className(), ['id' => 'author_id']);
+        return $this->hasOne(Post::className(), ['id' => 'post_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getComments()
+    public function getAuthor()
     {
-        return $this->hasMany(Comment::className(), ['post_id' => 'id']);
+        return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
 }

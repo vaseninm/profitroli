@@ -64,4 +64,24 @@ class PostCest
 
         $I->seeResponseCodeIs(200);
     }
+
+    /**
+     * @depends create
+     */
+    public function postComment(ApiTester $I) {
+        $I->sendPOST('/posts/' . $this->post['id'] . '/comments?token=' . $this->token, [
+            'text' => 'Привет, меня зовут Матвей и это мой тестовый комментарий. :)'
+        ]);
+
+        $I->seeResponseCodeIs(201);
+    }
+
+    /**
+     * @depends create
+     */
+    public function getComments(ApiTester $I) {
+        $I->sendGET('/posts/' . $this->post['id'] . '/comments');
+
+        $I->seeResponseCodeIs(200);
+    }
 }

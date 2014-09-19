@@ -71,7 +71,7 @@ class PostController extends \yii\rest\Controller
         \Yii::$app->response->setStatusCode(200);
 
         return Post::find()
-            ->orderBy('id')
+            ->orderBy(['create_date' => SORT_DESC])
             ->limit($limit)
             ->offset($offset)
             ->all();
