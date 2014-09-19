@@ -46,7 +46,7 @@ class UserCest
     public function successSendInvite(ApiTester $I)
     {
         $I->wantToTest('Успешную отправку нового инвайта для пользователя');
-        $I->sendPost('/invites/create?token=' . $this->token, [
+        $I->sendPost('/invites?token=' . $this->token, [
             'email' => UserCest::EMAIL,
         ]);
         $I->seeResponseCodeIs(201);
@@ -61,7 +61,7 @@ class UserCest
     {
         $username = substr(uniqid(rand(),1), 3, 14);
         $I->wantToTest('Успешную регистрацию нового пользователя');
-        $I->sendPOST('/users/registration', [
+        $I->sendPOST('/users', [
             'invite' => $this->invite,
             'email' => $username . '@profitroli',
             'name' => $username,
@@ -79,7 +79,7 @@ class UserCest
     public function successEdit(ApiTester $I)
     {
         $I->wantToTest('Смену телефона у пользователя');
-        $I->sendPUT('/users/' . UserCest::ID . '/edit?token=' . $this->token, [
+        $I->sendPUT('/users/' . UserCest::ID . '?token=' . $this->token, [
             'phone' => rand(7915000001, 79159999999),
         ]);
         $I->seeResponseCodeIs(200);

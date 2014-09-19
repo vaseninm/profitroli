@@ -42,12 +42,18 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+                'POST /invites' => 'invite/create',
+
                 'POST /users/login' => 'user/login',
-                'POST /invites/create' => 'invite/create',
-                'POST /users/registration' => 'user/registration',
-                'PUT /users/<id:\d+>/edit' => 'user/edit',
+                'POST /users' => 'user/registration',
+                'PUT /users/<id:\d+>' => 'user/edit',
                 'GET /users/<id:\d+>' => 'user/view',
                 'GET /users' => 'user/list',
+
+                'POST /posts' => 'post/create',
+                'PUT /posts/<id:\d+>' => 'post/edit',
+                'GET /posts/<id:\d+>' => 'post/view',
+                'GET /posts' => 'post/list',
             ]
         ],
     ],
