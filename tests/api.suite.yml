@@ -1,8 +1,0 @@
-class_name: ApiTester
-modules:
-    enabled: [PhpBrowser, REST, ApiHelper]
-    config:
-      PhpBrowser:
-          url: http://profitroli.tld
-      REST:
-          url: http://profitroli.tld
