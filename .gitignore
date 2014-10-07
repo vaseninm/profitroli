@@ -13,10 +13,10 @@ nbproject
 Thumbs.db
 
 # composer vendor dir
-/vendor
+api/vendor
 
 # composer itself is not needed
-composer.phar
+api/composer.phar
 
 # Mac DS_Store Files
 .DS_Store
@@ -26,6 +26,6 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-tests/_output/*
+api/tests/_output/*
 
-codecept.phar
+api/codecept.phar
