@@ -52,8 +52,10 @@ $config = [
 
                 'POST /posts' => 'post/create',
                 'PUT /posts/<id:\d+>' => 'post/edit',
-                'GET /posts/<id:\d+>' => 'post/view',
                 'GET /posts' => 'post/list',
+                'GET /posts/<id:\d+>' => 'post/view',
+                'OPTIONS /posts' => 'post/options',
+                'OPTIONS /posts/<id:\d+>' => 'post/options',
 
                 'POST /posts/<post:\d+>/comments' => 'comments/create',
                 'GET /posts/<post:\d+>/comments' => 'comments/list',

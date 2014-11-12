@@ -8,13 +8,24 @@ use yii\web\BadRequestHttpException;
 
 class PostController extends \yii\rest\Controller
 {
+
+    public function actions() {
+        return [
+            'options' => [
+                'class' => 'yii\rest\OptionsAction',
+            ],
+        ];
+    }
     public function behaviors()
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => QueryParamAuth::className(),
             'tokenParam' => 'token',
-            'except' => ['list', 'view'],
+            'except' => ['list', 'view', 'options'],
+        ];
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::className(),
         ];
         return $behaviors;
     }
