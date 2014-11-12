@@ -1,0 +1,6 @@
+<div id="comments-feed" class="list-group">
+	{#.posts}
+		{>"comments__item"/}
+	{/.posts}
+</div>
+<div id="comments-loader" class="loading" style="display: none"></div>

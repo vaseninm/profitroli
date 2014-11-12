@@ -61,6 +61,7 @@ $config = [
 
                 'POST /posts/<post:\d+>/comments' => 'comments/create',
                 'GET /posts/<post:\d+>/comments' => 'comments/list',
+                'OPTIONS /posts/<post:\d+>/comments' => 'post/options',
             ]
         ],
     ],

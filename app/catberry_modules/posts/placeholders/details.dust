@@ -3,4 +3,4 @@
         <p>{.text}</p>
         <p>{.create_date} от {.author_id}</p>
 </div>
-<div class="comments"></div>
+<div id="comments_index"></div>

@@ -11,6 +11,6 @@
 
 module.exports = [
 	'/:page[main, pages]',
-	'/:page[main, pages]/:id[pages, posts, users]',
+	'/:page[main, pages]/:id[pages, posts, comments, users]',
 	'/:page[main, pages]?query=:query[search]'
 ];

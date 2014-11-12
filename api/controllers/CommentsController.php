@@ -9,6 +9,14 @@ use yii\web\BadRequestHttpException;
 
 class CommentsController extends \yii\rest\Controller
 {
+    public function actions() {
+        return [
+            'options' => [
+                'class' => 'yii\rest\OptionsAction',
+            ],
+        ];
+    }
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -16,6 +24,9 @@ class CommentsController extends \yii\rest\Controller
             'class' => QueryParamAuth::className(),
             'tokenParam' => 'token',
             'only' => ['create'],
+        ];
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::className(),
         ];
         return $behaviors;
     }
