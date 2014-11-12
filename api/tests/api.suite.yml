@@ -3,6 +3,6 @@ modules:
     enabled: [PhpBrowser, REST, ApiHelper]
     config:
       PhpBrowser:
-          url: http://api.profitroli.tld
+          url: http://api.pt.tld
       REST:
-          url: http://api.profitroli.tld
+          url: http://api.pt.tld

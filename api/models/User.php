@@ -144,7 +144,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     public function isCorrectPassword($password) {
-        return crypt($password, $this->password) === $this->password;
+        return \Yii::$app->security->validatePassword($password, $this->password);
     }
 
     public function init()

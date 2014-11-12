@@ -22,7 +22,7 @@ class m140907_092050_users extends Migration
                 'name' => 'Матвей Васенин',
                 'email' => 'vaseninm@gmail.com',
                 'phone' => '79150000000',
-                'password' => crypt('123qwe'),
+                'password' => \Yii::$app->security->generatePasswordHash('123qwe'),
                 'create_date' => new \yii\db\Expression('NOW()'),
             ]);
     }

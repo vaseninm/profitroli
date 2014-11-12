@@ -28,7 +28,7 @@ class CommentsController extends \yii\rest\Controller
 
         $comment = new Comment();
 
-        $comment->link('post', $post);
+        $comment->post_id = $post->id;
         $comment->author_id = \Yii::$app->user->id;
 
         $comment->text = strip_tags(\Yii::$app->request->post('text'));

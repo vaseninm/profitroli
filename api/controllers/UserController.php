@@ -52,7 +52,7 @@ class UserController extends \yii\rest\Controller
         if ($invite->status === Invite::STATUS_USED) throw new BadRequestHttpException('Invite is used', 401);
 
         $user->load(\Yii::$app->request->post(), '');
-        $user->password = crypt(\Yii::$app->request->post('password'));
+        $user->password = \Yii::$app->security->generatePasswordHash(\Yii::$app->request->post('password'));
 
         if (! $user->save()) throw new BadRequestHttpException('Error ' . json_encode($user->errors), 401);
 
