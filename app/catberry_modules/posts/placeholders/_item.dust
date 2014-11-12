@@ -1,5 +1,5 @@
 <div class="posts" id="post-{.id}">
-    <h1>{.title}</h1>
+    <h3><a href="/posts/{.id}">{.title}</a></h3>
     <p>{.text}</p>
     <p>{.create_date} от {.author_id}</p>
 </div>

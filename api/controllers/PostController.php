@@ -16,6 +16,7 @@ class PostController extends \yii\rest\Controller
             ],
         ];
     }
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();

@@ -1,0 +1,3 @@
+<div class="user">
+        <p>{.name}</p>
+</div>

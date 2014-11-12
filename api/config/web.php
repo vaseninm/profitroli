@@ -49,6 +49,8 @@ $config = [
                 'PUT /users/<id:\d+>' => 'user/edit',
                 'GET /users/<id:\d+>' => 'user/view',
                 'GET /users' => 'user/list',
+                'OPTIONS /users' => 'post/options',
+                'OPTIONS /users/<id:\d+>' => 'post/options',
 
                 'POST /posts' => 'post/create',
                 'PUT /posts/<id:\d+>' => 'post/edit',

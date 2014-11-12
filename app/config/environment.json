@@ -1,5 +1,6 @@
 {
 	"title": "Профитроли S",
+    "rest": "http://api.pt.tld",
 	"server": {
 		"port": 3000
 	}

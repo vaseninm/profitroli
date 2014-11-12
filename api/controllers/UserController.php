@@ -10,13 +10,24 @@ use yii\web\BadRequestHttpException;
 
 class UserController extends \yii\rest\Controller
 {
+    public function actions() {
+        return [
+            'options' => [
+                'class' => 'yii\rest\OptionsAction',
+            ],
+        ];
+    }
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => QueryParamAuth::className(),
             'tokenParam' => 'token',
-            'except' => ['login', 'registration'],
+            'only' => ['edit'],
+        ];
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::className(),
         ];
         return $behaviors;
     }

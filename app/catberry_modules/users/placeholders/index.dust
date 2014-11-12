@@ -1,0 +1,6 @@
+<div id="users-feed" class="list-group">
+	{#.}
+		{>"users__item"/}
+	{/.}
+</div>
+<div id="users-loader" class="loading" style="display: none"></div>

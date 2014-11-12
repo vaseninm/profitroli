@@ -1,0 +1,5 @@
+<div class="users" id="post-{.id}">
+    <ul>
+        <li><a href="/users/{.id}">{.name}</a></li>
+    </ul>
+</div>

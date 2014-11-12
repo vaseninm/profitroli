@@ -15,8 +15,8 @@ var SUBTITLES = {
  * @param {string} title Site title.
  * @constructor
  */
-function MainModule(title) {
-	this._title = title;
+function MainModule(title, $config) {
+	this._title = $config.title;
 }
 
 /**

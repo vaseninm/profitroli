@@ -15,7 +15,10 @@ function PagesModule() {
  * @returns {Promise<Object>|Object|undefined} Data context.
  */
 PagesModule.prototype.renderIndex = function () {
-	return {page: this.$context.state.page};
+	return {
+        page: this.$context.state.page,
+        placeholder: this.$context.state.id > 0 ? 'details' : 'index'
+    };
 };
 
 /**
