@@ -1,0 +1,6 @@
+<div id="posts-feed" class="list-group">
+	{#.posts}
+		{>"posts__item"/}
+	{/.posts}
+</div>
+<div id="posts-loader" class="loading" style="display: none"></div>

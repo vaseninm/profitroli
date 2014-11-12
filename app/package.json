@@ -1,29 +1,27 @@
 {
-  "name": "profitroli",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "postinstall": "test -f ../../package.json && npm install ../../ || echo",
-    "postupdate": "test -f ../../package.json && npm install ../../ || echo"
-  },
-  "dependencies": {
-    "express": "~3",
-    "underscore": "~1.5.2",
-    "rendr-handlebars": "0.2.0",
-    "rendr": "0.5.0"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-browserify": "~1.2.9",
-    "grunt-contrib-stylus": "~0.5.0",
-    "grunt-contrib-handlebars": "~0.5.11",
-    "grunt-contrib-watch": "~0.3.1",
-    "nodemon": "~0.7.6"
-  },
-  "engines": {
-    "node": ">=0.8"
-  },
-  "private": true
+	"name": "catberry-example",
+	"version": "0.0.0",
+	"description": "Example Application based on Catberry Framework",
+	"main": "./server.js",
+	"browser": {
+		"./config/environment.js": "./config/browser.js"
+	},
+	"author": "Catberry",
+	"license": "MIT",
+	"dependencies": {
+		"catberry": "^3.0.0",
+		"catberry-lazy-loader": "^2.0.0",
+		"connect": "^3.0.0",
+		"serve-static": "^1.0.0",
+		"errorhandler": "^1.0.0"
+	},
+	"engines": {
+		"node": "^0.10.26"
+	},
+	"scripts": {
+		"start": "npm run release",
+		"release": "node ./build.js release && node ./server.js release",
+		"debug": "node ./build.js & node ./server.js",
+		"debug-win": "start /B node ./build.js && start /B node ./server.js"
+	}
 }
