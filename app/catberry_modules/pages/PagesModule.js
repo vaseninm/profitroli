@@ -15,9 +15,16 @@ function PagesModule() {
  * @returns {Promise<Object>|Object|undefined} Data context.
  */
 PagesModule.prototype.renderIndex = function () {
+    if (this.$context.state.id && parseInt(this.$context.state.id) == this.$context.state.id) {
+        var placeholder = 'details';
+    } else if (this.$context.state.id) {
+        var placeholder = this.$context.state.id;
+    } else {
+        var placeholder = 'index';
+    }
 	return {
         page: this.$context.state.page,
-        placeholder: this.$context.state.id > 0 ? 'details' : 'index'
+        placeholder: placeholder
     };
 };
 

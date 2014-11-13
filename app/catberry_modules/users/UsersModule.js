@@ -6,6 +6,7 @@ var util = require('util');
 
 var USERS_URL = 'http://api.pt.tld/users',
     USERS_ITEM_URL = 'http://api.pt.tld/users/%d',
+    USERS_LOGIN_URL = 'http://api.pt.tld/users/login',
     USERS_PAGE_URL_FORMAT = USERS_URL + '?offset=%d&limit=%d',
     PER_PAGE = 2;
 
@@ -84,6 +85,20 @@ UsersModule.prototype.renderDetails = function () {
 
         return result.content;
     });
+};
+
+UsersModule.prototype.renderLogin = function () {
+    return [];
+};
+
+UsersModule.prototype.submitLogin = function (event) {
+    this._uhr.post(USERS_LOGIN_URL, {
+        email: event.values.email,
+        password: event.values.password
+    }).then(function(result) {
+        return [];
+    });
+    return [];
 };
 
 /**
