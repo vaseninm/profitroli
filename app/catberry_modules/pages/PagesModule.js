@@ -6,8 +6,11 @@ module.exports = PagesModule;
  * Creates new instance of Pages module.
  * @constructor
  */
-function PagesModule() {
+function PagesModule($uhr) {
+    this._uhr = $uhr;
 }
+
+PagesModule.prototype._uhr = null;
 
 /**
  * Renders page content.
@@ -39,7 +42,27 @@ PagesModule.prototype.renderNavigation = function () {
 		this.$context.redirect('/posts');
 		return;
 	}
-	var data = {};
-	data[this.$context.state.page] = true;
-	return data;
+    var user, current;
+    var self = this;
+
+    return Promise.resolve({})
+        .then(function(result) {
+            result['current'] = {};
+            result['current'][self.$context.state.page] = true;
+
+            return result;
+        })
+        .then(function(result) {
+            if (self.$context.cookies.get('token')) {
+                return self._uhr.get(
+                    'http://api.pt.tld/users/me?token=' + self.$context.cookies.get('token')
+                ).then(function (getResult) {
+                        result['user'] = getResult.content;
+                        return result;
+                    });
+            } else {
+                result['user'] = null;
+                return result;
+            }
+        });
 };

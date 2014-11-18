@@ -24,7 +24,7 @@ class UserController extends \yii\rest\Controller
         $behaviors['authenticator'] = [
             'class' => QueryParamAuth::className(),
             'tokenParam' => 'token',
-            'only' => ['edit'],
+            'only' => ['edit', 'me'],
         ];
         $behaviors['corsFilter'] = [
             'class' => \yii\filters\Cors::className(),
@@ -51,7 +51,7 @@ class UserController extends \yii\rest\Controller
 
         \Yii::$app->response->setStatusCode(201);
 
-        return $token->key;
+        return $token;
     }
 
     public function actionRegistration()
@@ -105,6 +105,9 @@ class UserController extends \yii\rest\Controller
             ->all();
     }
 
+    public function actionMe() {
+        return \Yii::$app->user->identity;
+    }
 
 
 }

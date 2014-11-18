@@ -91,14 +91,29 @@ UsersModule.prototype.renderLogin = function () {
     return [];
 };
 
+UsersModule.prototype.renderLogout = function () {
+    this.$context.cookies.set({
+        key: 'token',
+        value: '',
+        expire: new Date(0)
+    });
+    this.$context.redirect('/posts');
+    return;
+};
+
 UsersModule.prototype.submitLogin = function (event) {
-    this._uhr.post(USERS_LOGIN_URL, {
+    var self = this;
+    this._uhr.post(USERS_LOGIN_URL, {data: {
         email: event.values.email,
         password: event.values.password
-    }).then(function(result) {
-        return [];
+    }}).then(function(result) {
+        self.$context.cookies.set({
+            key: 'token',
+            value: result.content.key,
+            path: '/'
+        });
+        self.$context.redirect('/posts');
     });
-    return [];
 };
 
 /**

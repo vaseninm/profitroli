@@ -44,12 +44,14 @@ $config = [
             'rules' => [
                 'POST /invites' => 'invite/create',
 
-                'POST /users/login' => 'user/login',
                 'POST /users' => 'user/registration',
+                'POST /users/login' => 'user/login',
+                'GET /users/me' => 'user/me',
                 'PUT /users/<id:\d+>' => 'user/edit',
                 'GET /users/<id:\d+>' => 'user/view',
                 'GET /users' => 'user/list',
                 'OPTIONS /users' => 'post/options',
+                'OPTIONS /users/me' => 'post/options',
                 'OPTIONS /users/<id:\d+>' => 'post/options',
                 'OPTIONS /users/login' => 'post/options',
 

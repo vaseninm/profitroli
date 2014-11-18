@@ -1,15 +1,15 @@
 <ul class="nav nav-tabs" role="tablist">
-    <li {?.posts}class="active"{/.posts}>
+    <li {?.current.posts}class="active"{/.current.posts}>
         <a href="/posts">Новости</a>
     </li>
-    <li {?.users}class="active"{/.users}>
+    <li {?.current.users}class="active"{/.current.users}>
         <a href="/users">Пользователи</a>
     </li>
-
-    <li {?.commits}class="active"{/.commits}>
-        <a href="/commits">Commits</a>
-    </li>
-    <li {?.search}class="active"{/.search}>
-        <a href="/search">Search</a>
+    <li>
+        {?.user}
+            <a href="/users/logout">Привет, {.user.name}! (Выйти)</a>
+        {:else}
+            <a href="/users/login">Авторизация</a>
+        {/.user}
     </li>
 </ul>
