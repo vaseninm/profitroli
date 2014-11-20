@@ -11,5 +11,5 @@
 // https://github.com/catberry/catberry/blob/master//docs/index.md#event-route-definition
 
 module.exports = [
-	'show-details-:sha->details[commits]'
+	'logout->logout[users]'
 ];

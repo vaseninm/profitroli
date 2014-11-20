@@ -29,3 +29,5 @@ phpunit.phar
 api/tests/_output/*
 
 api/codecept.phar
+
+app/public/bundle.js

@@ -7,7 +7,7 @@
     </li>
     <li>
         {?.user}
-            <a href="/users/logout">Привет, {.user.name}! (Выйти)</a>
+            <a href="#logout" data-event="logout">Привет, {.user.name}! (Выйти)</a>
         {:else}
             <a href="/users/login">Авторизация</a>
         {/.user}

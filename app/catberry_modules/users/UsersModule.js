@@ -91,13 +91,13 @@ UsersModule.prototype.renderLogin = function () {
     return [];
 };
 
-UsersModule.prototype.renderLogout = function () {
+UsersModule.prototype.handleLogout = function event() {
     this.$context.cookies.set({
         key: 'token',
         value: '',
         expire: new Date(0)
     });
-    this.$context.redirect('/posts');
+    this.$context.redirect('/');
     return;
 };
 
@@ -112,7 +112,8 @@ UsersModule.prototype.submitLogin = function (event) {
             value: result.content.key,
             path: '/'
         });
-        self.$context.redirect('/posts');
+        self.$context.redirect('/');
+        return;
     });
 };
 
