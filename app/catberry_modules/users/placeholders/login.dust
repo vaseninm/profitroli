@@ -1,5 +1,5 @@
 <form name="login" data-module="users">
-    <input type="text" name="email" />
-    <input type="password" name="password" />
+    <input type="text" name="email" placeholder="Почта" />
+    <input type="password" name="password" placeholder="Пароль" />
     <input type="submit">
 </form>

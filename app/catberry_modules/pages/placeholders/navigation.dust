@@ -5,11 +5,11 @@
     <li {?.current.users}class="active"{/.current.users}>
         <a href="/users">Пользователи</a>
     </li>
-    <li>
         {?.user}
-            <a href="#logout" data-event="logout">Привет, {.user.name}! (Выйти)</a>
+        <li><a href="#logout" data-event="logout">Привет, {.user.name}! (Выйти)</a></li>
         {:else}
-            <a href="/users/login">Авторизация</a>
+            <li><a href="/users/login">Авторизация</a></li>
+            <li><a href="/users/register">Регистрация</a></li>
         {/.user}
     </li>
 </ul>

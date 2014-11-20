@@ -7,6 +7,7 @@ var util = require('util');
 var USERS_URL = 'http://api.pt.tld/users',
     USERS_ITEM_URL = 'http://api.pt.tld/users/%d',
     USERS_LOGIN_URL = 'http://api.pt.tld/users/login',
+    USERS_REG_URL = 'http://api.pt.tld/users',
     USERS_PAGE_URL_FORMAT = USERS_URL + '?offset=%d&limit=%d',
     PER_PAGE = 2;
 
@@ -88,16 +89,6 @@ UsersModule.prototype.renderDetails = function () {
 };
 
 UsersModule.prototype.renderLogin = function () {
-    return [];
-};
-
-UsersModule.prototype.handleLogout = function event() {
-    this.$context.cookies.set({
-        key: 'token',
-        value: '',
-        expire: new Date(0)
-    });
-    this.$context.redirect('/');
     return;
 };
 
@@ -112,6 +103,39 @@ UsersModule.prototype.submitLogin = function (event) {
             value: result.content.key,
             path: '/'
         });
+        self.$context.redirect('/');
+        return;
+    });
+};
+
+UsersModule.prototype.handleLogout = function event() {
+    this.$context.cookies.set({
+        key: 'token',
+        value: '',
+        expire: new Date(0)
+    });
+    this.$context.redirect('/');
+    return;
+};
+
+UsersModule.prototype.renderRegister = function () {
+    return;
+};
+
+UsersModule.prototype.submitRegister = function (event) {
+    var self = this;
+    this._uhr.post(USERS_REG_URL, {data: {
+        email: event.values.email,
+        password: event.values.password,
+        name: event.values.name,
+        phone: event.values.phone,
+        invite: event.values.invite
+    }}).then(function(result) {
+        //self.$context.cookies.set({
+        //    key: 'token',
+        //    value: result.content.key,
+        //    path: '/'
+        //});
         self.$context.redirect('/');
         return;
     });

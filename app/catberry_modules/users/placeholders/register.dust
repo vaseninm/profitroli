@@ -1,0 +1,8 @@
+<form name="register" data-module="users">
+    <input type="text" name="email" placeholder="Почта" />
+    <input type="password" name="password" placeholder="Пароль" />
+    <input type="text" name="name" placeholder="Имя" />
+    <input type="text" name="phone" placeholder="Телефон" />
+    <input type="text" name="invite" placeholder="Код приглашения" />
+    <input type="submit">
+</form>
