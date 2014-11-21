@@ -8,6 +8,7 @@ var USERS_URL = 'http://api.pt.tld/users',
     USERS_ITEM_URL = 'http://api.pt.tld/users/%d',
     USERS_LOGIN_URL = 'http://api.pt.tld/users/login',
     USERS_REG_URL = 'http://api.pt.tld/users',
+    USERS_EDIT_URL = 'http://api.pt.tld/users/%d?token=%s',
     USERS_PAGE_URL_FORMAT = USERS_URL + '?offset=%d&limit=%d',
     PER_PAGE = 2;
 
@@ -131,12 +132,27 @@ UsersModule.prototype.submitRegister = function (event) {
         phone: event.values.phone,
         invite: event.values.invite
     }}).then(function(result) {
-        //self.$context.cookies.set({
-        //    key: 'token',
-        //    value: result.content.key,
-        //    path: '/'
-        //});
         self.$context.redirect('/');
+        return;
+    });
+};
+
+UsersModule.prototype.renderEdit = function () {
+    if (! this.$context.cookies.get('token')) self.$context.redirect('/');
+    return;
+};
+
+UsersModule.prototype.submitEdit = function (event) {
+    var self = this;
+    self._uhr.get('http://api.pt.tld/users/me?token=' + self.$context.cookies.get('token')).then(function (result) {
+        return self._uhr.put(util.format(USERS_EDIT_URL, result.content.id, self.$context.cookies.get('token')), {
+            data: {
+                name: event.values.name,
+                phone: event.values.phone
+            }
+        })
+    }).then(function (result) {
+        self.$context.redirect(util.format('/users/%d', result.content.id));
         return;
     });
 };

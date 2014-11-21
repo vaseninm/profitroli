@@ -1,0 +1,5 @@
+<form name="edit" data-module="users">
+    <input type="text" name="name" placeholder="Имя" />
+    <input type="text" name="phone" placeholder="Телефон" />
+    <input type="submit">
+</form>
