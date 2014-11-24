@@ -1,0 +1,5 @@
+<form name="create" data-module="posts">
+    <input type="text" name="title" placeholder="Заголовок" />
+    <textarea name="text" cols="30" rows="10" placeholder="Текст"></textarea>
+    <input type="submit">
+</form>

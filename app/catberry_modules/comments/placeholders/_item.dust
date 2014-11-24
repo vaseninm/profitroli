@@ -1,4 +1,4 @@
 <div class="comments" id="comment-{.id}">
     <p>{.text}</p>
-    <p>{.create_date} от {.author_id}</p>
+    <p>{.create_date} от {.author.name}</p>
 </div>

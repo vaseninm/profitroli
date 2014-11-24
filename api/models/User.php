@@ -112,6 +112,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        unset($fields['password']);
+
+        return $fields;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

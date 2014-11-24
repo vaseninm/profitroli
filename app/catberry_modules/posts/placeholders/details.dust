@@ -1,6 +1,6 @@
 <div class="post">
         <h3>{.title}</h3>
         <p>{.text}</p>
-        <p>{.create_date} от {.author_id}</p>
+        <p>{.create_date} от {.author.name}</p>
 </div>
 <div id="comments_index"></div>

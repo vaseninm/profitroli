@@ -86,6 +86,25 @@ PostsModule.prototype.renderDetails = function () {
     });
 };
 
+PostsModule.prototype.renderCreate = function () {
+    return;
+};
+
+PostsModule.prototype.submitCreate = function (submitEvent) {
+    var self = this;
+    self._uhr.post(
+        'http://api.pt.tld/posts?token=' + self.$context.cookies.get('token'), {
+            data: {
+                title: submitEvent.values.title,
+                text: submitEvent.values.text
+            }
+        }
+    ).then(function (result) {
+            self.$context.redirect(util.format('/posts/%d', result.content.id));
+            return;
+        });
+};
+
 /**
  * Does something after index placeholder is rendered.
  * This method is invoked only in browser.

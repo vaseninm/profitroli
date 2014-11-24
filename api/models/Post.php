@@ -54,6 +54,17 @@ class Post extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        unset($fields['author_id']);
+
+        $fields['author'] = 'author';
+
+        return $fields;
+    }
+
     public function init()
     {
         parent::init();
