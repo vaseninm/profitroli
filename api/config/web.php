@@ -42,6 +42,8 @@ $config = [
             'showScriptName' => false,
             'enableStrictParsing' => true,
             'rules' => [
+                'debug/<controller>/<action>' => 'debug/<controller>/<action>',
+
                 'POST /invites' => 'invite/create',
 
                 'POST /users' => 'user/registration',

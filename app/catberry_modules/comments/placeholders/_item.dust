@@ -1,4 +1,4 @@
-<div class="posts panel panel-primary" id="post-{.id}">
+<div class="posts panel panel-info" id="post-{.id}">
     <div class="panel-body">
         {.text}
     </div>

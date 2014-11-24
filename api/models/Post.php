@@ -61,6 +61,7 @@ class Post extends \yii\db\ActiveRecord
         unset($fields['author_id']);
 
         $fields['author'] = 'author';
+        $fields['count_comments'] = function($model) {return $this->getComments()->count(); };
 
         return $fields;
     }
