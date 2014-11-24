@@ -75,7 +75,9 @@ CommentsModule.prototype.renderIndex = function () {
 };
 
 CommentsModule.prototype.renderCreate = function () {
-    return;
+    return {
+        me: this.$context.renderedData.pages.navigation.user
+    };
 };
 
 CommentsModule.prototype.submitCreate = function (submitEvent) {

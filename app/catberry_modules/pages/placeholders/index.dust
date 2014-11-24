@@ -1,2 +1,4 @@
 <!--This is dynamic reference to placeholder -->
-<div id="{page}_{placeholder}"></div>
+<div class="container-fluid">
+    <div id="{page}_{placeholder}"></div>
+</div>

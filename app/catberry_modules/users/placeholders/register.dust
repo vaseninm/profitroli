@@ -1,8 +1,11 @@
-<form name="register" data-module="users">
-    <input type="text" name="email" placeholder="Почта" />
-    <input type="password" name="password" placeholder="Пароль" />
-    <input type="text" name="name" placeholder="Имя" />
-    <input type="text" name="phone" placeholder="Телефон" />
-    <input type="text" name="invite" placeholder="Код приглашения" />
-    <input type="submit">
-</form>
+<div class="container">
+    <form name="register" data-module="users" class="form-signin" role="form">
+        <h2 class="form-signin-heading text-center">Регистрация</h2>
+        <input type="text" class="form-control" name="email" placeholder="Почта" autofocus="" />
+        <input type="password" class="form-control" name="password" placeholder="Пароль" />
+        <input type="text" class="form-control" name="name" placeholder="Имя" />
+        <input type="text" class="form-control" name="phone" placeholder="Телефон" />
+        <input type="text" class="form-control" name="invite" placeholder="Код приглашения" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
+    </form>
+</div>

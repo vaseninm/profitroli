@@ -113,6 +113,7 @@ UsersModule.prototype.handleLogout = function event() {
     this.$context.cookies.set({
         key: 'token',
         value: '',
+        path: '/',
         expire: new Date(0)
     });
     this.$context.redirect('/');

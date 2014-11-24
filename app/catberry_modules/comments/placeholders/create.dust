@@ -1,4 +1,12 @@
+{?.me}
 <form name="create" data-module="comments">
-    <textarea name="text" cols="30" rows="10" placeholder="Ваш комментарий"></textarea>
-    <input type="submit">
+    <textarea name="text" rows="10" class="form-control" placeholder="Ваш комментарий, {me.name}"></textarea>
+    <p> </p>
+    <input type="submit" class="btn btn-primary">
 </form>
+{:else}
+    <div class="alert alert-info" role="alert">
+        <a href="/users/login">Войдите</a> или <a href="/users/register">зарегистрируйтесь</a> для того,
+            что бы комментировать.
+    </div>
+{/.me}

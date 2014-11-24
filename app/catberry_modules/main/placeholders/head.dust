@@ -3,5 +3,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} - {subtitle}</title>
 <link href="/css/bootstrap.min.css" rel="stylesheet">
-<link href="/css/loader.css" rel="stylesheet">
+<link href="/css/main.css" rel="stylesheet">
 <script src="/bundle.js"></script>

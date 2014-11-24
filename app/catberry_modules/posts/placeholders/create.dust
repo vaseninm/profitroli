@@ -1,5 +1,8 @@
-<form name="create" data-module="posts">
-    <input type="text" name="title" placeholder="Заголовок" />
-    <textarea name="text" cols="30" rows="10" placeholder="Текст"></textarea>
-    <input type="submit">
-</form>
+<div class="container">
+    <form name="create" data-module="posts" class="form-post" role="form">
+        <h2 class="text-center">Добавление новости</h2>
+        <input type="text" name="title" class="form-control" placeholder="Заголовок" autofocus="" />
+        <textarea name="text" class="form-control" rows="10" placeholder="Текст"></textarea>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Добавить новость</button>
+    </form>
+</div>

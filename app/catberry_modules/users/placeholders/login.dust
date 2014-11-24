@@ -1,5 +1,8 @@
-<form name="login" data-module="users">
-    <input type="text" name="email" placeholder="Почта" />
-    <input type="password" name="password" placeholder="Пароль" />
-    <input type="submit">
-</form>
+<div class="container">
+    <form name="login" data-module="users" class="form-signin" role="form">
+        <h2 class="form-signin-heading text-center">Авторизация</h2>
+        <input type="email" name="email" class="form-control" placeholder="Почта" required="" autofocus="">
+        <input type="password" name="password" class="form-control" placeholder="Пароль" required="">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+    </form>
+</div>

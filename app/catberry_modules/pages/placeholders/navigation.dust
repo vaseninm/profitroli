@@ -1,15 +1,29 @@
-<ul class="nav nav-tabs" role="tablist">
-    <li {?.current.posts}class="active"{/.current.posts}>
-        <a href="/posts">Новости</a>
-    </li>
-    <li {?.current.users}class="active"{/.current.users}>
-        <a href="/users">Пользователи</a>
-    </li>
-        {?.user}
-        <li><a href="#logout" data-event="logout">Привет, {.user.name}! (Выйти)</a></li>
-        {:else}
-            <li><a href="/users/login">Авторизация</a></li>
-            <li><a href="/users/register">Регистрация</a></li>
-        {/.user}
-    </li>
-</ul>
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <span class="navbar-brand" href="#">
+                <strong>Профитроли</strong>
+            </span>
+        </div>
+        <div class="container">
+            <ul class="nav navbar-nav" role="tablist">
+                <li {?.current.posts}class="active"{/.current.posts}>
+                    <a href="/posts">Новости</a>
+                </li>
+                <li {?.current.users}class="active"{/.current.users}>
+                    <a href="/users">Пользователи</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" role="tablist">
+                {?.user}
+                    <li><a href="/posts/create">
+                        Написать новость <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </a></li>
+                    <li><a href="#logout" data-event="logout">Привет, {.user.name}! (Выйти)</a></li>
+                {:else}
+                    <li><a href="/users/login">Авторизация</a></li>
+                    <li><a href="/users/register">Регистрация</a></li>
+                {/.user}
+            </ul>
+        </div>
+</nav>

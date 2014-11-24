@@ -1,7 +1,9 @@
-<div id="comments-feed" class="list-group">
-	{#.posts}
-		{>"comments__item"/}
-	{/.posts}
+<div class="container">
+    <div id="comments-feed" class="list-group">
+        {#.posts}
+            {>"comments__item"/}
+        {/.posts}
+    </div>
+    <div id="comments-loader" class="loading" style="display: none"></div>
+    <div id="comments_create" style="display: none;"></div>
 </div>
-<div id="comments-loader" class="loading" style="display: none"></div>
-<div id="comments_create" style="display: none;"></div>

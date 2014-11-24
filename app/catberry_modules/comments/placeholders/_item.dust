@@ -1,4 +1,6 @@
-<div class="comments" id="comment-{.id}">
-    <p>{.text}</p>
-    <p>{.create_date} от {.author.name}</p>
+<div class="posts panel panel-primary" id="post-{.id}">
+    <div class="panel-body">
+        {.text}
+    </div>
+    <div class="panel-footer">{.create_date} от <a href="/users/{author.id}">{.author.name}</a></div>
 </div>
