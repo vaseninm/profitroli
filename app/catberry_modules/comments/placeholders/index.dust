@@ -4,3 +4,4 @@
 	{/.posts}
 </div>
 <div id="comments-loader" class="loading" style="display: none"></div>
+<div id="comments_create" style="display: none;"></div>

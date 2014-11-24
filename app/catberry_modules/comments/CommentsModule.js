@@ -65,11 +65,34 @@ CommentsModule.prototype._offset = 0;
  */
 CommentsModule.prototype.renderIndex = function () {
     this._offset = 0;
+    var self = this;
 
     return this.getItems(this._offset, PER_PAGE)
         .then(function (items) {
+            self._offset += items.length;
             return {posts: items};
         });
+};
+
+CommentsModule.prototype.renderCreate = function () {
+    return;
+};
+
+CommentsModule.prototype.submitCreate = function (submitEvent) {
+    var self = this;
+    self._uhr.post(
+        'http://api.pt.tld/posts/' + self.$context.state.id + '/comments?token=' + self.$context.cookies.get('token'), {
+            data: {
+                text: submitEvent.values.text
+            }
+        }
+    ).then(function (result) {
+            if (self.$context.isBrowser) {
+                submitEvent.element.context.reset();
+                return self.lazyLoader.loadChunk(PER_PAGE);
+            }
+        return;
+    });
 };
 
 
@@ -89,9 +112,12 @@ CommentsModule.prototype.afterRenderIndex = function () {
  */
 CommentsModule.prototype.itemsFactory = function (last, limit) {
     var self = this;
-    return this.getItems(this._offset + limit, PER_PAGE)
+    return this.getItems(this._offset, PER_PAGE)
         .then(function (items) {
-            self._offset += PER_PAGE;
+            if (PER_PAGE > items.length) {
+                $('#comments_create').show();
+            }
+            self._offset += items.length;
             return items;
         });
 };
