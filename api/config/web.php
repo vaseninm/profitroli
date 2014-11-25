@@ -49,6 +49,7 @@ $config = [
                 'POST /users' => 'user/registration',
                 'POST /users/login' => 'user/login',
                 'GET /users/me' => 'user/me',
+                'POST /users/upload-avatar' => 'user/upload-avatar',
                 'PUT /users/<id:\d+>' => 'user/edit',
                 'GET /users/<id:\d+>' => 'user/view',
                 'GET /users' => 'user/list',
@@ -56,6 +57,7 @@ $config = [
                 'OPTIONS /users/me' => 'post/options',
                 'OPTIONS /users/<id:\d+>' => 'post/options',
                 'OPTIONS /users/login' => 'post/options',
+                'OPTIONS /users/upload-avatar' => 'post/options',
 
                 'POST /posts' => 'post/create',
                 'PUT /posts/<id:\d+>' => 'post/edit',

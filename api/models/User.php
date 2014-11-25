@@ -25,6 +25,8 @@ use yii\web\IdentityInterface;
 
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+    public $file;
+
     /**
      * @inheritdoc
      */
@@ -93,7 +95,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['create_date'], 'safe'],
             [['name', 'email', 'phone', 'password'], 'string', 'max' => 255],
             [['name', 'email', 'phone', 'password'], 'string', 'max' => 255],
-            [['email'], 'unique']
+            [['email'], 'unique'],
+            [['file'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
         ];
     }
 
