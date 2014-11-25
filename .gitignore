@@ -30,4 +30,6 @@ api/tests/_output/*
 
 api/codecept.phar
 
+api/web/uploads/avatar-user-*
+
 app/public/bundle.js

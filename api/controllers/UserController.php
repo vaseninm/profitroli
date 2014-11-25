@@ -5,9 +5,7 @@ namespace app\controllers;
 use app\models\Invite;
 use app\models\Token;
 use app\models\User;
-use Imagine\Image\Box;
 use yii\filters\auth\QueryParamAuth;
-use yii\imagine\Image;
 use yii\web\BadRequestHttpException;
 use yii\web\UploadedFile;
 
@@ -115,14 +113,9 @@ class UserController extends \yii\rest\Controller
     public function actionUploadAvatar() {
         $model = \Yii::$app->user->identity;
 
-        $model->file = UploadedFile::getInstanceByName('file');
+        $model->uploadAvatar(UploadedFile::getInstanceByName('file'));
 
-        if ($model->validate()) {
-            Image::getImagine()
-                ->open($model->file->tempName)
-                ->resize(new Box(100, 100))
-                ->save(\Yii::getAlias('@web/uploads/') . 'avatar-user-' . $model->id . '.png');
-        }
+        return $model;
     }
 
 

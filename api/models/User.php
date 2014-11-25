@@ -3,9 +3,11 @@
 namespace app\models;
 
 use Yii;
-use yii\base\ModelEvent;
-use yii\db\BaseActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\UploadedFile;
+use yii\imagine\Image;
+use Imagine\Image\Box;
+
 
 /**
  * This is the model class for table "users".
@@ -121,6 +123,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
         unset($fields['password']);
 
+        $fields['avatar'] = function ($model) {
+            return $this->getAvatarUrl();
+        };
+
         return $fields;
     }
 
@@ -167,6 +173,32 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         if ($this->isNewRecord) {
             $this->create_date = new \yii\db\Expression('NOW()');
         }
+    }
+
+    public function uploadAvatar(UploadedFile $file) {
+
+        $this->file = $file;
+
+        if ($this->validate()) {
+            Image::getImagine()
+                ->open($this->file->tempName)
+                ->resize(new Box(100, 100))
+                ->save(\Yii::getAlias('@webroot/uploads') . '/avatar-user-' . $this->id . '.png');
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getAvatarUrl() {
+        $url = '/avatar-user-' . $this->id . '.png';
+
+        return file_exists(\Yii::getAlias('@webroot/uploads') . $url )
+            ?
+                (\Yii::getAlias('@web/uploads')  . $url)
+            :
+                'avatar-default.png';
     }
 
 }
