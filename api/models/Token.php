@@ -59,6 +59,18 @@ class Token extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        $fields = parent::fields();
+
+        unset($fields['status']);
+        unset($fields['user_id']);
+
+        $fields['user'] = 'user';
+
+        return $fields;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

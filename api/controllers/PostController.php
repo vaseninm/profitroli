@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\models\Post;
 use yii\filters\auth\QueryParamAuth;
 use yii\web\BadRequestHttpException;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 class PostController extends \yii\rest\Controller
 {
@@ -39,7 +41,7 @@ class PostController extends \yii\rest\Controller
         $post->title = \Yii::$app->request->post('title');
         $post->text = strip_tags(\Yii::$app->request->post('text'));
 
-        if (! $post->save()) throw new BadRequestHttpException('Error ' . json_encode($post->errors), 401);
+        if (! $post->save()) throw new BadRequestHttpException('Некорректно заполнена форма');
 
         \Yii::$app->response->setStatusCode(201);
 
@@ -50,14 +52,14 @@ class PostController extends \yii\rest\Controller
     {
         $post = Post::findOne($id);
 
-        if ($post->author_id !== \Yii::$app->user->id) throw new BadRequestHttpException('User not post owner', 403);
+        if ($post->author_id !== \Yii::$app->user->id) throw new ForbiddenHttpException('Вы не являетесь автором этой новости');
 
-        if (! $post) throw new BadRequestHttpException('Post not found', 404);
+        if (! $post) throw new NotFoundHttpException('Новость не найдена');
 
         $post->title = \Yii::$app->request->post('title');
         $post->text = strip_tags(\Yii::$app->request->post('text'));
 
-        if (! $post->save()) throw new BadRequestHttpException('Error ' . json_encode($post->errors), 401);
+        if (! $post->save()) throw new BadRequestHttpException('Некорректно заполнена форма');
 
         \Yii::$app->response->setStatusCode(200);
 
@@ -68,7 +70,7 @@ class PostController extends \yii\rest\Controller
     {
         $post = Post::findOne($id);
 
-        if (! $post) throw new BadRequestHttpException('Post not found', 404);
+        if (! $post) throw new NotFoundHttpException('Новость не найдена');
 
         \Yii::$app->response->setStatusCode(200);
 

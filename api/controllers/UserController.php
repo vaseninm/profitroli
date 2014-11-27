@@ -7,6 +7,7 @@ use app\models\Token;
 use app\models\User;
 use yii\filters\auth\QueryParamAuth;
 use yii\web\BadRequestHttpException;
+use yii\web\HttpException;
 use yii\web\UploadedFile;
 
 class UserController extends \yii\rest\Controller
@@ -40,15 +41,13 @@ class UserController extends \yii\rest\Controller
             ->one();
 
         if (! $user || ! $user->isCorrectPassword(\Yii::$app->request->post('password'))) {
-            throw new BadRequestHttpException('Password not correct', 401);
+            throw new HttpException(401, 'Неверная пара email/пароль');
         }
 
         $token = new Token();
         $token->user_id = $user->id;
 
-        if (! $token->save()) {
-            throw new BadRequestHttpException('Error ' . json_encode($token->errors), 401);
-        }
+        $token->save();
 
         \Yii::$app->response->setStatusCode(201);
 
@@ -60,13 +59,13 @@ class UserController extends \yii\rest\Controller
         $user = new User();
         $invite = Invite::findOne(['key' => \Yii::$app->request->post('invite')]);
 
-        if (! $invite) throw new BadRequestHttpException('Invite not found', 401);
-        if ($invite->status === Invite::STATUS_USED) throw new BadRequestHttpException('Invite is used', 401);
+        if (! $invite) throw new HttpException(400, 'Инвайт не найден');
+        if ($invite->status === Invite::STATUS_USED) throw new HttpException(400, 'Инвайт уже использован');
 
         $user->load(\Yii::$app->request->post(), '');
         $user->password = \Yii::$app->security->generatePasswordHash(\Yii::$app->request->post('password'));
 
-        if (! $user->save()) throw new BadRequestHttpException('Error ' . json_encode($user->errors), 401);
+        if (! $user->save()) throw new BadRequestHttpException('Некорректно заполнена форма');
 
         $invite->setUsedBy($user)->save();
 
@@ -79,12 +78,12 @@ class UserController extends \yii\rest\Controller
     {
         $id = (int) $id;
 
-        if ($id !== \Yii::$app->user->id) throw new BadRequestHttpException('Not own profile', 401);
+        if ($id !== \Yii::$app->user->id) throw new BadRequestHttpException('Нельзя редактировать чужой профиль', 401);
 
         $user = User::findOne($id);
         $user->load(\Yii::$app->request->post(), false);
 
-        if (! $user->save()) throw new BadRequestHttpException('Error ' . json_encode($user->errors), 401);
+        if (! $user->save()) throw new BadRequestHttpException('Некорректно заполнена форма');
 
         \Yii::$app->response->setStatusCode(200);
 

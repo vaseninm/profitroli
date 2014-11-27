@@ -6,6 +6,7 @@ use app\models\Comment;
 use app\models\Post;
 use yii\filters\auth\QueryParamAuth;
 use yii\web\BadRequestHttpException;
+use yii\web\NotFoundHttpException;
 
 class CommentsController extends \yii\rest\Controller
 {
@@ -35,7 +36,7 @@ class CommentsController extends \yii\rest\Controller
     {
         $post = Post::findOne($post);
 
-        if (! $post) throw new BadRequestHttpException('Post not found', 404);
+        if (! $post) throw new NotFoundHttpException('Новость не найдена', 404);
 
         $comment = new Comment();
 
@@ -44,7 +45,7 @@ class CommentsController extends \yii\rest\Controller
 
         $comment->text = strip_tags(\Yii::$app->request->post('text'));
 
-        if (! $comment->save()) throw new BadRequestHttpException('Error ' . json_encode($post->errors), 401);
+        if (! $comment->save()) throw new BadRequestHttpException('Некорректно заполнена форма');
 
         \Yii::$app->response->setStatusCode(201);
 
@@ -55,7 +56,7 @@ class CommentsController extends \yii\rest\Controller
     {
         $post = Post::findOne($post);
 
-        if (! $post) throw new BadRequestHttpException('Post not found', 404);
+        if (! $post) throw new NotFoundHttpException('Новость не найдена', 404);
 
         $limit = (\Yii::$app->request->get('limit') <= 100) ? \Yii::$app->request->get('limit', 30) : 100;
         $offset = \Yii::$app->request->get('offset', 0);
