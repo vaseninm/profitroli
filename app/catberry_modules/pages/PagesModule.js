@@ -2,15 +2,19 @@
 
 module.exports = PagesModule;
 
+var util = require('util');
+
 /**
  * Creates new instance of Pages module.
  * @constructor
  */
-function PagesModule($uhr) {
+function PagesModule($uhr, $config) {
     this._uhr = $uhr;
+    this._config = $config;
 }
 
 PagesModule.prototype._uhr = null;
+PagesModule.prototype._config = null;
 
 /**
  * Renders page content.
@@ -45,14 +49,12 @@ PagesModule.prototype.renderNavigation = function () {
     var user, current;
     var self = this;
 
-    return Promise.resolve({})
-        .then(function(result) {
+    return Promise.resolve({}).then(function(result) {
             result['current'] = {};
             result['current'][self.$context.state.page] = true;
 
             return result;
-        })
-        .then(function(result) {
+        }).then(function(result) {
             if (self.$context.cookies.get('token')) {
                 return self._uhr.get(
                     'http://api.pt.tld/users/me?token=' + self.$context.cookies.get('token')

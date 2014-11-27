@@ -3,9 +3,6 @@
 module.exports = MainModule;
 
 var SUBTITLES = {
-	about: 'About Catberry Framework',
-	commits: 'Commits to Catberry Framework repository',
-	search: 'Search in Catberry code',
 	posts: 'Новости',
 	users: 'Пользователи'
 };
@@ -15,7 +12,7 @@ var SUBTITLES = {
  * @param {string} title Site title.
  * @constructor
  */
-function MainModule(title, $config) {
+function MainModule($config) {
 	this._title = $config.title;
 }
 
