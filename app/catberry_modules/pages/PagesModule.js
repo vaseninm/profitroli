@@ -29,7 +29,7 @@ PagesModule.prototype.renderIndex = function () {
     } else {
         var placeholder = 'index';
     }
-	return {
+    return {
         page: this.$context.state.page,
         placeholder: placeholder
     };
@@ -42,29 +42,29 @@ PagesModule.prototype.renderIndex = function () {
  * @returns {Promise<Object>|Object|undefined} Data context.
  */
 PagesModule.prototype.renderNavigation = function () {
-	if (!this.$context.state.page) {
-		this.$context.redirect('/posts');
-		return;
-	}
+    if (!this.$context.state.page) {
+        this.$context.redirect('/posts');
+        return;
+    }
     var user, current;
     var self = this;
 
-    return Promise.resolve({}).then(function(result) {
-            result['current'] = {};
-            result['current'][self.$context.state.page] = true;
+    return Promise.resolve({}).then(function (result) {
+        result['current'] = {};
+        result['current'][self.$context.state.page] = true;
 
+        return result;
+    }).then(function (result) { //@todo не то что бы лапша, но поработать надо
+        if (self.$context.cookies.get('token')) {
+            return self._uhr.get(
+                self._config.rest + util.format('/users/me?token=%s', self.$context.cookies.get('token'))
+            ).then(function (answer) {
+                    result['user'] = answer.content;
+                    return result;
+                });
+        } else {
+            result['user'] = null;
             return result;
-        }).then(function(result) {
-            if (self.$context.cookies.get('token')) {
-                return self._uhr.get(
-                    'http://api.pt.tld/users/me?token=' + self.$context.cookies.get('token')
-                ).then(function (getResult) {
-                        result['user'] = getResult.content;
-                        return result;
-                    });
-            } else {
-                result['user'] = null;
-                return result;
-            }
-        });
+        }
+    });
 };

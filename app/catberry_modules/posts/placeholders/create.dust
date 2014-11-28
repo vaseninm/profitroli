@@ -3,6 +3,7 @@
         <h2 class="text-center">Добавление новости</h2>
         <input type="text" name="title" class="form-control" placeholder="Заголовок" autofocus="" />
         <textarea name="text" class="form-control" rows="10" placeholder="Текст"></textarea>
+        <div id="post-error-form" class="alert alert-danger" role="alert" style="display: none"></div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Добавить новость</button>
     </form>
 </div>

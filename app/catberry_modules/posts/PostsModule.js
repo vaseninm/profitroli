@@ -4,10 +4,7 @@ module.exports = PostsModule;
 
 var util = require('util');
 
-var POSTS_URL = 'http://api.pt.tld/posts',
-    POSTS_ITEM_URL = 'http://api.pt.tld/posts/%d',
-    POSTS_PAGE_URL_FORMAT = POSTS_URL + '?offset=%d&limit=%d',
-    PER_PAGE = 2;
+var PER_PAGE = 2; //@todo не зыбыть поставить адекватное значение что бы спамить
 
 /**
  * Creates new instance of Commits module.
@@ -16,8 +13,9 @@ var POSTS_URL = 'http://api.pt.tld/posts',
  * @param {ServiceLocator} $serviceLocator Service locator to resolve plugin.
  * @constructor
  */
-function PostsModule($uhr, $jQuery, $serviceLocator) {
+function PostsModule($uhr, $jQuery, $config, $serviceLocator) {
     this._uhr = $uhr;
+    this._config = $config;
     this.$ = $jQuery;
     if (this.$context.isBrowser) {
         this.lazyLoader = $serviceLocator.resolve('lazyLoader');
@@ -68,40 +66,46 @@ PostsModule.prototype._offset = 0;
 PostsModule.prototype.renderIndex = function () {
     this._offset = 0;
 
-    return this.getItems(this._offset, PER_PAGE)
-        .then(function (items) {
-            return {posts: items};
-        });
+    return this.getItems(this._offset, PER_PAGE).then(function (items) {
+        return {posts: items};
+    });
 };
 
 PostsModule.prototype.renderDetails = function () {
     return this._uhr.get(
-        util.format(POSTS_ITEM_URL, this.$context.state.id)
+        this._config.rest + util.format('/posts/%d', this.$context.state.id)
     ).then(function (result) {
-        if (result.status.code >= 400 && result.status.code < 600) {
-            throw new Error(result.status.text);
-        }
-
-        return result.content;
-    });
+            if (result.status.code !== 200) {
+                throw new Error(result.content.message);
+            }
+            return result.content;
+        });
 };
 
 PostsModule.prototype.renderCreate = function () {
+    if (! this.$context.renderedData.pages.navigation.user) {
+        throw new Error('Вы не авторизованы для этого действия');
+    }
     return;
 };
 
 PostsModule.prototype.submitCreate = function (submitEvent) {
     var self = this;
-    self._uhr.post(
-        'http://api.pt.tld/posts?token=' + self.$context.cookies.get('token'), {
+    self._uhr.post(this._config.rest + util.format('/posts?token=%s', self.$context.cookies.get('token')),
+        {
             data: {
                 title: submitEvent.values.title,
                 text: submitEvent.values.text
             }
         }
     ).then(function (result) {
-            self.$context.redirect(util.format('/posts/%d', result.content.id));
-            return;
+            if (result.status.code === 201) {
+                self.$('#post-error-form').hide();
+                self.$context.redirect(util.format('/posts/%d', result.content.id));
+                return;
+            } else {
+                self.$('#post-error-form').text(result.content.message).show();
+            }
         });
 };
 
@@ -136,11 +140,10 @@ PostsModule.prototype.itemsFactory = function (last, limit) {
  */
 PostsModule.prototype.getItems = function (offset, limit) {
     return this._uhr.get(
-        util.format(POSTS_PAGE_URL_FORMAT, offset, limit)
-    )
-        .then(function (result) {
-            if (result.status.code >= 400 && result.status.code < 600) {
-                throw new Error(result.status.text);
+        this._config.rest + util.format('/posts?offset=%d&limit=%d', offset, limit)
+    ).then(function (result) {
+            if (result.status.code != 200) {
+                throw new Error(result.content.message);
             }
 
             return result.content;
