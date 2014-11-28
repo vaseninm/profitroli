@@ -1,4 +1,4 @@
-<div class="container">
+<div class="comments">
     <div id="comments-feed" class="list-group">
         {#.posts}
             {>"comments__item"/}

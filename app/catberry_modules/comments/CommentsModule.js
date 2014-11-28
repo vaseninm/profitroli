@@ -4,8 +4,7 @@ module.exports = CommentsModule;
 
 var util = require('util');
 
-var COMMENTS_URL = 'http://api.pt.tld/posts/%d/comments?offset=%d&limit=%d',
-    PER_PAGE = 2;
+var PER_PAGE = 2; //@todo не зыбыть поставить адекватное значение что бы спамить
 
 /**
  * Creates new instance of Commits module.
@@ -14,8 +13,9 @@ var COMMENTS_URL = 'http://api.pt.tld/posts/%d/comments?offset=%d&limit=%d',
  * @param {ServiceLocator} $serviceLocator Service locator to resolve plugin.
  * @constructor
  */
-function CommentsModule($uhr, $jQuery, $serviceLocator) {
+function CommentsModule($uhr, $jQuery, $config, $serviceLocator) {
     this._uhr = $uhr;
+    this._config = $config;
     this.$ = $jQuery;
     if (this.$context.isBrowser) {
         this.lazyLoader = $serviceLocator.resolve('lazyLoader');
@@ -36,6 +36,9 @@ function CommentsModule($uhr, $jQuery, $serviceLocator) {
  * @private
  */
 CommentsModule.prototype._uhr = null;
+
+
+CommentsModule.prototype._config = null;
 
 /**
  * Current jQuery instance.
@@ -83,18 +86,21 @@ CommentsModule.prototype.renderCreate = function () {
 CommentsModule.prototype.submitCreate = function (submitEvent) {
     var self = this;
     self._uhr.post(
-        'http://api.pt.tld/posts/' + self.$context.state.id + '/comments?token=' + self.$context.cookies.get('token'), {
+        this._config.rest + util.format('/posts/%d/comments?token=%s', self.$context.state.id, self.$context.cookies.get('token')),
+        {
             data: {
                 text: submitEvent.values.text
             }
         }
     ).then(function (result) {
-            if (self.$context.isBrowser) {
+            if (result.status.code === 201) {
+                self.$('#comment-error-form').hide();
                 submitEvent.element.context.reset();
                 return self.lazyLoader.loadChunk(PER_PAGE);
+            } else {
+                self.$('#comment-error-form').text(result.content.message).show();
             }
-        return;
-    });
+        });
 };
 
 
@@ -132,11 +138,10 @@ CommentsModule.prototype.itemsFactory = function (last, limit) {
  */
 CommentsModule.prototype.getItems = function (offset, limit) {
     return this._uhr.get(
-        util.format(COMMENTS_URL, this.$context.state.id, offset, limit)
-    )
-        .then(function (result) {
-            if (result.status.code >= 400 && result.status.code < 600) {
-                throw new Error(result.status.text);
+        this._config.rest + util.format('/posts/%d/comments?offset=%d&limit=%d', this.$context.state.id, offset, limit)
+    ).then(function (result) {
+            if (result.status.code !== 200) {
+                throw new Error(result.content.message);
             }
 
             return result.content;

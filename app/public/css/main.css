@@ -64,3 +64,7 @@
 .form-post .form-control:focus {
     z-index: 2;
 }
+
+.comments {
+    padding: 0 100px 0 10px;
+}
