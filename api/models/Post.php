@@ -34,6 +34,7 @@ class Post extends \yii\db\ActiveRecord
     {
         return [
             [['text'], 'string'],
+            [['title', 'text', 'author_id', 'create_date'], 'required'],
             [['author_id'], 'integer'],
             [['create_date'], 'safe'],
             [['title'], 'string', 'max' => 255]
