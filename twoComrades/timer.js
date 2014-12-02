@@ -17,20 +17,20 @@ function Timer() {
     this.init();
 }
 
-Timer.prototype.serverTime = 0;
+Timer.prototype.clientServerDiff = 0;
 Timer.prototype.timeZone = +3;
 Timer.prototype.timeUrl = 'http://api.pt.tld/time.php';
 
 Timer.prototype.init = function() {
     this.sync();
     this.tick();
-    setInterval(this.tick.bind(this), 1000);
+    setInterval(this.tick.bind(this), 100);
 };
 
 Timer.prototype.sync = function() {
     var self = this;
     $.get(this.timeUrl, {}, function(result) {
-        self.serverTime = result;
+        self.clientServerDiff = (new Date).getTime() - result * 1000;
     });
 };
 
@@ -41,7 +41,9 @@ Timer.prototype.setTimeZone = function(timeZone) {
 Timer.prototype.getTime = function() {
     var date = new Date;
 
-    date.setTime((this.serverTime + this.timeZone * 3600 + date.getTimezoneOffset() * 60) * 1000);
+    date.setTime(
+        ((new Date).getTime() - this.clientServerDiff + this.timeZone * 3600000 + date.getTimezoneOffset() * 60000)
+    );
 
     return date;
 };
