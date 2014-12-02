@@ -1,3 +1,4 @@
 <?php
-date_default_timezone_set('Etc/UCT');
+header('Access-Control-Allow-Origin: *');
+
 echo time();
